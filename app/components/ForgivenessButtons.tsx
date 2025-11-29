@@ -48,6 +48,14 @@ export default function ForgivenessButtons({ onForgiven }: ForgivenessButtonsPro
     }, 250);
 
     onForgiven();
+
+    // Scroll to top after 0.5 seconds
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 900);
   };
 
   const handleNoHover = () => {
