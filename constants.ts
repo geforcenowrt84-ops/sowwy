@@ -27,5 +27,9 @@ Please forgive me. I love you more than words can express. ❤️`,
     "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop",
     "https://i.imgur.com/qWVCZBm.jpeg",
   ],
+  
+  // Music player settings
+  musicFile: "/ijcsyt.mp3", // Place your music file in the public folder
+  musicTitle: "A.P - I Just Couldn’t Save You Tonight", // Change the title here
 };
 

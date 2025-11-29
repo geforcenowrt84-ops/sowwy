@@ -1,23 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FloatingHearts from "./components/FloatingHearts";
 import ForgivenessButtons from "./components/ForgivenessButtons";
+import IntroOverlay from "./components/IntroOverlay";
+import MusicPlayer from "./components/MusicPlayer";
 import { CONFIG } from "@/constants";
 
 export default function Home() {
   const [isForgiven, setIsForgiven] = useState(false);
   const [currentGif, setCurrentGif] = useState(CONFIG.heroGif);
+  const [showMusicPlayer, setShowMusicPlayer] = useState(false);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const playMusicRef = useRef<(() => void) | null>(null);
 
   const handleForgiven = () => {
     setIsForgiven(true);
     setCurrentGif(CONFIG.happyGif);
   };
 
+  const handleIntroClose = () => {
+    setShowMusicPlayer(true);
+    setShouldAutoPlay(true);
+    // Try to play immediately after user interaction
+    setTimeout(() => {
+      if (playMusicRef.current) {
+        playMusicRef.current();
+      }
+    }, 100);
+  };
+
   return (
-    <div className="min-h-screen relative overflow-x-hidden" style={{ backgroundColor: '#fff9f9' }}>
+    <div className="min-h-screen relative overflow-x-hidden" style={{ backgroundColor: '#ffeef2' }}>
+      <IntroOverlay onClose={handleIntroClose} />
       <FloatingHearts />
       
       <main className="relative z-10 max-w-4xl mx-auto px-4 py-8 md:py-16 pb-24">
@@ -138,6 +155,28 @@ export default function Home() {
           
           <ForgivenessButtons onForgiven={handleForgiven} />
         </motion.section>
+
+        {/* Music Player */}
+        {showMusicPlayer && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mb-12"
+          >
+            <MusicPlayer 
+              audioSrc={CONFIG.musicFile}
+              title={CONFIG.musicTitle}
+              autoPlay={shouldAutoPlay}
+              onReady={(play) => {
+                playMusicRef.current = play;
+                if (shouldAutoPlay) {
+                  setTimeout(() => play(), 100);
+                }
+              }}
+            />
+          </motion.section>
+        )}
       </main>
 
       {/* Footer */}
@@ -146,7 +185,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.6 }}
         className="fixed bottom-0 left-0 right-0 z-10 text-center py-4 px-4 backdrop-blur-sm"
-        style={{ backgroundColor: 'rgba(255, 249, 249, 0.9)' }}
+        style={{ backgroundColor: 'rgba(255, 238, 242, 0.65)' }}
       >
         <p className="text-gray-600 text-sm md:text-base">
           Made with{" "}
