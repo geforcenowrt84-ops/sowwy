@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff9f9;
+  --foreground: #2d2d2d;
+  --baby-pink: #ffd1dc;
+  --hot-pink: #ff69b4;
+  --cream: #fff9f9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-baby-pink: var(--baby-pink);
+  --color-hot-pink: var(--hot-pink);
+  --color-cream: var(--cream);
+  --font-sans: var(--font-nunito);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), sans-serif;
+  overflow-x: hidden;
+}
